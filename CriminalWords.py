@@ -3,12 +3,13 @@ from pprint import pprint
 from speechToText import *
 import requests
 from collections import Counter
+import gui
+import EmotionSpeech
 
 
 APP_ACCESS_TOKEN = 'P637HVIWSHN73DKHIB2SPGVTKLVRZWSI'
 
 base_url = 'https://api.wit.ai/speech'
-
 
 class CriminalWords:
 
@@ -22,7 +23,10 @@ class CriminalWords:
 
     def convert_speech_to_text(self):
 
-        file = "/Users/raneem/Desktop/voice/2.wav"
+        g = gui
+        file = str(g.gu(self))
+        # file = "/Users/raneem/Desktop/voice/2.wav"
+        # file = "/Users/raneem/Desktop/voice/01_samples_trimmed_noise_reduced/04_voices_org.wav"
         audio = read_audio(file)
         headers = {'authorization': 'Bearer ' + APP_ACCESS_TOKEN,
                'Content-Type': 'audio/wav'}
