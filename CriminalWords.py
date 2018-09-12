@@ -4,7 +4,7 @@ from speechToText import *
 import requests
 from collections import Counter
 import gui
-import EmotionSpeech
+from collections import Counter
 
 
 APP_ACCESS_TOKEN = 'P637HVIWSHN73DKHIB2SPGVTKLVRZWSI'
@@ -12,6 +12,8 @@ APP_ACCESS_TOKEN = 'P637HVIWSHN73DKHIB2SPGVTKLVRZWSI'
 base_url = 'https://api.wit.ai/speech'
 
 class CriminalWords:
+
+    obj = gui
 
     def read_audio(file_path):
         # function to read audio(wav) file
@@ -52,6 +54,8 @@ class CriminalWords:
 
         text = self.convert_speech_to_text()
 
+        self.obj.gu(text)
+
         # Spilt text into words
         try:
             print(text)  # print the text
@@ -77,13 +81,13 @@ class CriminalWords:
 
             # Find frequent words
 
-            try:
-                # data = Counter(wordList)
-
-                # print(data.most_common(1)[0][0])
-
-            except:
-                print("There is no frequent words")
+            # try:
+            #     # data = Counter(wordList)
+            #
+            #     # print(data.most_common(1)[0][0])
+            #
+            # except:
+            #     print("There is no frequent words")
 
 
 
