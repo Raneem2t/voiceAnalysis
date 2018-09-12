@@ -19,13 +19,14 @@ class CriminalWords:
             audio = f.read()
         return audio
 
-
+    def Most_Common(lst):
+        return max(set(lst), key=lst.count)
 
     def convert_speech_to_text(self):
 
-        g = gui
-        file = str(g.gu(self))
-        # file = "/Users/raneem/Desktop/voice/2.wav"
+        # g = gui
+        # file = str(g.gu(self))
+        file = "/Users/raneem/Desktop/voice/2.wav"
         # file = "/Users/raneem/Desktop/voice/01_samples_trimmed_noise_reduced/04_voices_org.wav"
         audio = read_audio(file)
         headers = {'authorization': 'Bearer ' + APP_ACCESS_TOKEN,
@@ -60,8 +61,9 @@ class CriminalWords:
             for words in wordList:
                 print(words)
 
+
             # detect the criminal words
-            wordfreq = []
+
             try:
                 print("The criminal words were detected are: ...")
                 for i in range(len(wordList)):
@@ -70,11 +72,20 @@ class CriminalWords:
                     for row in self.cursor:
                         row == ""
                         print(row)
-                        counts = Counter(row).most_common(1)
-                        print(counts)
-
             except:
                 print("No criminal words detect...")
+
+            # Find frequent words
+
+            try:
+                # data = Counter(wordList)
+
+                # print(data.most_common(1)[0][0])
+
+            except:
+                print("There is no frequent words")
+
+
 
         except:
             print("Error")
