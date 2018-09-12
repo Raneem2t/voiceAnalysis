@@ -13,7 +13,7 @@ base_url = 'https://api.wit.ai/speech'
 
 class CriminalWords:
 
-    obj = gui
+
 
     def read_audio(file_path):
         # function to read audio(wav) file
@@ -53,7 +53,7 @@ class CriminalWords:
     def find_criminal_words(self):
 
         text = self.convert_speech_to_text()
-
+        obj = gui
         self.obj.gu(text)
 
         # Spilt text into words
