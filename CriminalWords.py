@@ -2,7 +2,6 @@ import psycopg2
 from pprint import pprint
 from speechToText import *
 import requests
-from collections import Counter
 import gui
 from collections import Counter
 
@@ -13,7 +12,7 @@ base_url = 'https://api.wit.ai/speech'
 
 class CriminalWords:
 
-
+    obj = gui
 
     def read_audio(file_path):
         # function to read audio(wav) file
@@ -38,7 +37,7 @@ class CriminalWords:
         return data_response['_text']
 
 
-    # Connect to the database
+    # Conشnect to the database
     def __init__(self):
         try:
             self.conniction = psycopg2.connect(
@@ -53,8 +52,7 @@ class CriminalWords:
     def find_criminal_words(self):
 
         text = self.convert_speech_to_text()
-        obj = gui
-        self.obj.gu(text)
+        # self.obj.gu(text)
 
         # Spilt text into words
         try:
@@ -71,11 +69,15 @@ class CriminalWords:
             try:
                 print("The criminal words were detected are: ...")
                 for i in range(len(wordList)):
+
                     self.cursor.execute("SELECT name FROM pet WHERE name = '%s'" % wordList[i])
 
                     for row in self.cursor:
                         row == ""
-                        print(row)
+
+                        self.obj.gu(row)
+
+                        # print(row)
             except:
                 print("No criminal words detect...")
 
