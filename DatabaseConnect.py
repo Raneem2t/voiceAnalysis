@@ -13,8 +13,7 @@ class DatabaseConnection:
 
         except:
             pprint("Cannot connect to database")
-
-
+    
 
     # create table
 def create_table(self):
