@@ -3,21 +3,16 @@ import scipy.io.wavfile
 
 sys.path.append("../api")
 from api import Vokaturi
-import CriminalWords
 
 
-class d:
-    def r (self):
-# print ("Loading library...")
-# Vokaturi.load("../lib/open/macos/OpenVokaturi-3-0-mac64.dylib")
+class EmotionState:
+    def EmotionState (self):
+
         Vokaturi.load("lib/open/macos/OpenVokaturi-3-0-mac64.dylib")
-        g = CriminalWords.convert_speech_to_text()
-        file_name = g.gu()
+        # g = CriminalWords.convert_speech_to_text()
         print ("Reading sound file...")
-# file_name = sys.argv[1]
-# file_name = "/Users/raneem/Desktop/voice/2.wav"
-# file_name = "/Users/raneem/Desktop/voice/01_samples_trimmed_noise_reduced/04_voices_org.wav"
-# file_name = "/Users/raneem/Downloads/noise_reduction-master/00_samples/01_counting.m4a"
+        # file_name = "/Users/raneem/Desktop/voice/2.wav"
+        file_name = "/Users/raneem/Downloads/AudioData/DC/a01.wav"
         (sample_rate, samples) = scipy.io.wavfile.read(file_name)
 
         buffer_length = len(samples)
@@ -27,10 +22,10 @@ class d:
         else:  # stereo
 	        c_buffer[:] = 0.5*(samples[:,0]+0.0+samples[:,1]) / 32768.0
 
-# print ("Creating VokaturiVoice...")
+        # Creating VokaturiVoice.
         voice = Vokaturi.Voice (sample_rate, buffer_length)
 
-# print ("Filling VokaturiVoice with samples...")
+        # Filling VokaturiVoice with samples
         voice.fill(buffer_length, c_buffer)
 
         print ("Extracting emotions ...")
@@ -38,15 +33,35 @@ class d:
         emotionProbabilities = Vokaturi.EmotionProbabilities()
         voice.extract(quality, emotionProbabilities)
 
-        if quality.valid:
-	        print ("Neutral: %.3f" % emotionProbabilities.neutrality)
-	        print ("Happy: %.3f" % emotionProbabilities.happiness)
-	        print ("Sad: %.3f" % emotionProbabilities.sadness)
-	        print ("Angry: %.3f" % emotionProbabilities.anger)
-	        print ("Fear: %.3f" % emotionProbabilities.fear)
+
+        Emotion = ""
+        neutral = emotionProbabilities.neutrality
+        happy = emotionProbabilities.happiness
+        sad = emotionProbabilities.sadness
+        angre = emotionProbabilities.anger
+        fear = emotionProbabilities.fear
+
+
+
+        print("Emotion Speach of the speaker is ..")
+        if Emotion == neutral:
+            print ("Neutral")
+
+        elif Emotion == happy:
+            print("Happy")
+
+        elif Emotion == sad:
+            print("Happy")
+
+        elif Emotion == angre:
+            print("Happy")
+
+        elif Emotion == fear:
+            print("Fear")
 
         else:
-	        print ("Not enough sonorancy to determine emotions")
+            print("Not enough sonorancy to determine emotions")
+
 
         voice.destroy()
 
