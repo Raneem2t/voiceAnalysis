@@ -1,34 +1,33 @@
 import psycopg2
 from pprint import pprint
-from speechToText import *
-import requests
-import gui
 from collections import Counter
+import requests
+import string
+import speech_recognition
+from langdetect import detect
 
 
 APP_ACCESS_TOKEN = 'P637HVIWSHN73DKHIB2SPGVTKLVRZWSI'
 
 base_url = 'https://api.wit.ai/speech'
 
+
+def read_audio(file_path):
+    # function to read audio(wav) file
+    with open(file_path, 'rb') as f:
+        audio = f.read()
+    return audio
+
 class CriminalWords:
 
-    obj = gui
-
-    def read_audio(file_path):
-        # function to read audio(wav) file
-        with open(file_path, 'rb') as f:
-            audio = f.read()
-        return audio
 
     def Most_Common(lst):
         return max(set(lst), key=lst.count)
 
     def convert_speech_to_text(self):
 
-        # g = gui
-        # file = str(g.gu(self))
         file = "/Users/raneem/Desktop/voice/2.wav"
-        # file = "/Users/raneem/Desktop/voice/01_samples_trimmed_noise_reduced/04_voices_org.wav"
+        # file = "/Users/raneem/Desktop /voice/01_samples_trimmed_noise_reduced/04_voices_org.wav"
         audio = read_audio(file)
         headers = {'authorization': 'Bearer ' + APP_ACCESS_TOKEN,
                'Content-Type': 'audio/wav'}
@@ -54,15 +53,31 @@ class CriminalWords:
         text = self.convert_speech_to_text()
         # self.obj.gu(text)
 
-        # Spilt text into words
+        # Spilt text into words and
+        # Skip some unusual words
         try:
             print(text)  # print the text
+
+            skipwords = ['what', 'who', 'is', 'a', 'at', 'is', 'he', "are", "the", "so", "to", "for", "if", "where", "was", "ware", "by"]
             wordList = text.split(" ")  # split text into words
 
+            resultwords = [word for word in wordList if word.lower() not in skipwords]
+            result = ' '.join(resultwords)
 
-            for words in wordList:
+            print(result)
+
+
+            for words in resultwords:
                 print(words)
 
+
+            try:
+                frequent = Counter(resultwords)
+                most_occur = frequent.most_common()
+                print(most_occur)
+
+            except:
+                print("There is no frequent words")
 
             # detect the criminal words
 
@@ -75,22 +90,22 @@ class CriminalWords:
                     for row in self.cursor:
                         row == ""
 
-                        self.obj.gu(row)
+                        # self.obj.gu(row)
 
-                        # print(row)
+                        print(row)
             except:
                 print("No criminal words detect...")
 
-            # Find frequent words
-
-            # try:
-            #     # data = Counter(wordList)
-            #
-            #     # print(data.most_common(1)[0][0])
-            #
-            # except:
-            #     print("There is no frequent words")
-
+            # Detect if it is english or not
+            try:
+                # text = "War doesn't show who's right, just who's left."
+                # t = "مرحبا"
+                if detect(text) == 'en':
+                    print("True")
+                else:
+                    print("False")
+            except:
+                print("Can not detect the language.")
 
 
         except:
