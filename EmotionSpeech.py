@@ -3,16 +3,27 @@ import scipy.io.wavfile
 
 sys.path.append("../api")
 from api import Vokaturi
+import ConvertAudio
+
+co = ConvertAudio
 
 
 class EmotionState:
+
+
     def EmotionState (self):
 
         Vokaturi.load("lib/open/macos/OpenVokaturi-3-0-mac64.dylib")
         # g = CriminalWords.convert_speech_to_text()
         print ("Reading sound file...")
         # file_name = "/Users/raneem/Desktop/voice/2.wav"
-        file_name = "/Users/raneem/Downloads/AudioData/DC/a01.wav"
+
+        file_name = "/Users/raneem/PycharmProjects/databaseEG/venv/lib/python2.7/site-packages/test/data/happy.mp3"
+
+        file_name = co.convert(file_name)
+
+
+        # file_name = "/Users/raneem/Downloads/OpenVokaturi-3-0a/examples/hello.wav"
         (sample_rate, samples) = scipy.io.wavfile.read(file_name)
 
         buffer_length = len(samples)
@@ -34,33 +45,36 @@ class EmotionState:
         voice.extract(quality, emotionProbabilities)
 
 
-        Emotion = ""
+
         neutral = emotionProbabilities.neutrality
         happy = emotionProbabilities.happiness
         sad = emotionProbabilities.sadness
         angre = emotionProbabilities.anger
         fear = emotionProbabilities.fear
 
+        Emotion = [neutral, happy, sad, angre, fear]
+
+        x = max(Emotion)
 
 
         print("Emotion Speach of the speaker is ..")
-        if Emotion == neutral:
-            print ("Neutral")
+        if x == neutral:
+            print ("Neutral\n")
 
-        elif Emotion == happy:
-            print("Happy")
+        elif x == happy:
+            print("Happy\n")
 
-        elif Emotion == sad:
-            print("Happy")
+        elif x == sad:
+            print("Sad\n")
 
-        elif Emotion == angre:
-            print("Happy")
+        elif x == angre:
+            print("Angry\n")
 
-        elif Emotion == fear:
-            print("Fear")
+        elif x == fear:
+            print("Fear\n")
 
         else:
-            print("Not enough sonorancy to determine emotions")
+            print("Not enough sonorancy to determine emotions\n")
 
 
         voice.destroy()
