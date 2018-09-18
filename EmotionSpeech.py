@@ -15,7 +15,6 @@ class EmotionState:
 
         Vokaturi.load("lib/open/macos/OpenVokaturi-3-0-mac64.dylib")
         # g = CriminalWords.convert_speech_to_text()
-        print ("Reading sound file...")
         # file_name = "/Users/raneem/Desktop/voice/2.wav"
 
         file_name = "/Users/raneem/PycharmProjects/databaseEG/venv/lib/python2.7/site-packages/test/data/happy.mp3"
