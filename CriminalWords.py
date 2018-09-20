@@ -3,7 +3,7 @@ from pprint import pprint
 from collections import Counter
 import requests
 
-from langdetect import detect
+# from langdetect import detect
 
 
 APP_ACCESS_TOKEN = 'P637HVIWSHN73DKHIB2SPGVTKLVRZWSI'
@@ -25,7 +25,7 @@ class CriminalWords:
 
     def convert_speech_to_text(self):
 
-        file = "/Users/raneem/Desktop/voice/2.wav"
+        file = "/Users/mac/Desktop/Voice/1.mp3"
         # file = "/Users/raneem/Desktop/voice/01_samples_trimmed_noise_reduced/04_voices_org.wav"
         audio = read_audio(file)
         headers = {'authorization': 'Bearer ' + APP_ACCESS_TOKEN,
@@ -40,7 +40,7 @@ class CriminalWords:
     def __init__(self):
         try:
             self.conniction = psycopg2.connect(
-                "dbname= 'sample_db' user='raneem' host='localhost' password='123456' port='5432'")
+                "dbname= 'word_db' user='abrar' host='localhost' password='12345' port='5432'")
             self.conniction.autocommit = True
             self.cursor = self.conniction.cursor()
 
@@ -71,14 +71,7 @@ class CriminalWords:
             #     # print(words)
 
 
-            try:
-                frequent = Counter(resultwords)
-                most_occur = frequent.most_common()
-                print("The frequent words are .. \n")
-                print(most_occur, "\n")
 
-            except:
-                print("There is no frequent words")
 
             # detect the criminal words
 
@@ -86,37 +79,62 @@ class CriminalWords:
                 print("The criminal words were detected are: ...")
                 for i in range(len(wordList)):
 
-                    self.cursor.execute("SELECT name FROM pet WHERE name = '%s'" % wordList[i])
+                    self.cursor.execute("SELECT name FROM pet1 WHERE name = '%s'" % wordList[i])
 
                     for row in self.cursor:
                         row == ""
 
                         # self.obj.gu(row)
-
+                        dd="".join(str(x) for x in row)
+                        print (dd)
                         print(row)
             except:
                 print("No criminal words detect...")
 
             # Detect if it is english or not
-            try:
-                # t = "مرحبا"
-                if detect(text) == 'en':
-                    print("\nIt is an English Speech.\n")
-                else:
-                    print("\nIt is not English Speech.\n")
-            except:
-                print("\nCan not detect the language.\n")
+
 
 
         except:
             print("Error")
 
+    def find_detect_words(self):
+        try:
+            # t = "مرحبا"
+            if detect(text) == 'en':
+                print("\nIt is an English Speech.\n")
+            else:
+                print("\nIt is not English Speech.\n")
+        except:
+            print("\nCan not detect the language.\n")
+
+
+    def find_frequent_words(self):
+        try:
+            text = self.convert_speech_to_text()
+
+            skipwords = ['what', 'who', 'is', 'a', 'at', 'is', 'he', "are", "the", "so", "to", "for", "if", "where", "was", "ware", "by"]
+            wordList = text.split(" ")  # split text into words
+
+            resultwords = [word for word in wordList if word.lower() not in skipwords]
+            result = ' '.join(resultwords)
+            frequent = Counter(resultwords)
+            most_occur = frequent.most_common()
+            print("The frequent words are .. \n")
+            print(most_occur, "\n")
+
+        except:
+            print("There is no frequent words")
+
     def find_abnormalWord(self):
         text = self.convert_speech_to_text()
         # self.obj.gu(text)
         # Spilt text into words
+        dd = []
         try:
-            # print(text)  # print the text
+            print ("jg")
+            print(text)  # print the text
+
 
             wordList = text.split(" ")  # split text into words
 
@@ -141,8 +159,14 @@ class CriminalWords:
 
                     for row in self.cursor:
                         row == ""
-                        # CwordList = row
-                        print(row)
+
+
+                        dd.append(row)
+                        # dd.append("".join(str(x) for x in row))
+                        # CwordList = dd
+
+                        # print (dd)
+                        # print(row)
                         # counts = Counter(row).most_common(1)
                         # print(counts)
 
@@ -151,9 +175,10 @@ class CriminalWords:
 
         except:
             print("Error")
-
+        return dd
 
 if __name__ == '__main__':
     criminal_Words = CriminalWords()
 
-    criminal_Words.find_criminal_words()
+    ss=criminal_Words.find_abnormalWord()
+    print (" ".join(str(x) for x in ss))

@@ -21,7 +21,7 @@ def read_audio(file_path):
 
 def convert_speech_to_text(self):
     # file gui_file.answer
-    file = "/Users/raneem/Desktop/voice/2.wav"
+    file = "/Users/mac/Desktop/Voice/1.mp3"
     # file = "/Users/raneem/Desktop/voice/01_samples_trimmed_noise_reduced/04_voices_org.wav"
          # file = tryGui.path_name
     audio = read_audio(file)

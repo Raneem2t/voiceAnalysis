@@ -13,8 +13,9 @@ if __name__ == '__main__':
 
     e.EmotionState()
     c.find_criminal_words()
-    c.find_abnormalWord()
-
+    # c.find_abnormalWord()
+    c.find_detect_words()
+    c.find_frequent_words()
 
     stop = timeit.default_timer()
 

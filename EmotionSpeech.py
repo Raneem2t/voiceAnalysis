@@ -17,9 +17,9 @@ class EmotionState:
         # g = CriminalWords.convert_speech_to_text()
         # file_name = "/Users/raneem/Desktop/voice/2.wav"
 
-        file_name = "/Users/raneem/PycharmProjects/databaseEG/venv/lib/python2.7/site-packages/test/data/happy.mp3"
+        file_name = "/Users/mac/Desktop/Voice/1.mp3"
 
-        file_name = co.convert(file_name)
+        # file_name = co.convert(file_name)
 
 
         # file_name = "/Users/raneem/Downloads/OpenVokaturi-3-0a/examples/hello.wav"
