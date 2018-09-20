@@ -132,7 +132,6 @@ class CriminalWords:
         # Spilt text into words
         dd = []
         try:
-            print ("jg")
             print(text)  # print the text
 
 
